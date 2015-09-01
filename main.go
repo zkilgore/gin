@@ -48,6 +48,11 @@ func main() {
 		cli.StringFlag{
 			Name:  "path,t",
 			Value: ".",
+			Usage: "Path to build files from",
+		},
+		cli.StringFlag{
+			Name:  "watch,w",
+			Value: ".",
 			Usage: "Path to watch files from",
 		},
 		cli.BoolFlag{
@@ -116,7 +121,7 @@ func MainAction(c *cli.Context) {
 	build(builder, runner, logger)
 
 	// scan for changes
-	scanChanges(c.GlobalString("path"), func(path string) {
+	scanChanges(c.GlobalString("watch"), func(path string) {
 		runner.Kill()
 		build(builder, runner, logger)
 	})
